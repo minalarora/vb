@@ -17,7 +17,6 @@ const UserSchema = new mongoose.Schema({
     {
         type: String,
         default: null,
-        unique: true,
         minlength: 5,
         maxlength: 255,
     },
@@ -39,7 +38,7 @@ const UserSchema = new mongoose.Schema({
     password:
     {
         type: String,
-        required: true,
+        default:null,
         minlength: 5,
         maxlength: 255,
     },
@@ -53,18 +52,16 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: null
     },
-    mobile: {
-        type: String,
-        required: true,
-        unique:true,
-        trim: true,
-        maxlength: [10, "Invalid Mobile Number"],
-        
-    },
     active:
     {
         type: Boolean,
         default: true
+    },
+    type:
+    {
+        type: String,
+        required: true,
+        enum : ['EMAIL','GMAIL'],
     },
     tokens: [
         {
@@ -99,8 +96,11 @@ UserSchema.methods.generateToken = async function () {
 
 UserSchema.methods.generateNotification = async function (token) {
     const user = this
-    user.notifications = user.notifications.concat(token)
-    await user.save()
+    if(!user.notifications.includes(token))
+    {
+        user.notifications = user.notifications.concat(token)
+        await user.save()
+    }
     return
 }
 
@@ -132,10 +132,11 @@ UserSchema.pre('save', async function (next) {
 const User = mongoose.model("User", UserSchema);
 
 
-function validateUser(user) {
+function validateUserByEmail(user) {
 
     const schema = Joi
         .object({
+
             email: Joi
                 .string()
                 .min(5)
@@ -159,11 +160,6 @@ function validateUser(user) {
             max(255).
             required(),
 
-            mobile: Joi.string().trim().
-            min(3).
-            max(10).
-            required(),
-            
             notification: Joi.string().
             min(3).
             max(255)
@@ -172,7 +168,52 @@ function validateUser(user) {
         
 
         )
-        //.with("password", "confirmPassword");
+
+    try {
+        return schema.validate(user);
+    } catch (err) {
+        return err
+    };
+
+}
+
+function validateUserByGmail(user) {
+
+    const schema = Joi
+        .object({
+
+            email: Joi
+                .string()
+                .min(5)
+                .max(250)
+                .required()
+                .email({
+                    minDomainSegments: 2,
+                    tlds: {
+                        allow: ["com", "net"],
+                    },
+                }),
+            
+            name: Joi.string().
+            min(3).
+            max(255).
+            required(),
+
+            uid: Joi.string().
+            min(3).
+            max(255).
+            required(),
+
+            notification: Joi.string().
+            min(3).
+            max(255),
+
+            profile: Joi.string().
+            max(255),
+            
+        }
+
+        )
 
     try {
         return schema.validate(user);
@@ -183,4 +224,5 @@ function validateUser(user) {
 }
 
 module.exports.User = User;
-module.exports.validate = validateUser;
+module.exports.validateEmail = validateUserByEmail;
+module.exports.validateGmail = validateUserByGmail;
