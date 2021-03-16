@@ -6,6 +6,21 @@ const {
     validateEmail,
     validateGmail
 } = require("../models/user");
+const {imageupload, imagedownload}  = require('../utils/imageupload')
+var multer = require('multer')
+
+var upload = multer({
+    limits:
+    {   
+        
+    },
+    fileFilter: function (req, file, cb) {
+
+        return cb(undefined, true);
+
+    }
+})
+
 
 
 router.post('/v1/user/email',async (req,res)=>
@@ -116,6 +131,30 @@ router.post('/v1/logout',auth,async (req,res)=>
     }
 })
 
+
+router.post('/v1/user/image',auth,upload.single("image"),async (req,res)=>
+{
+    try
+    {
+        let image = await imageupload(req.file.buffer)
+        if(image!=0)
+        {
+            req.user.image  = image
+            await req.user.save()
+            return res.status(200).send("URL")
+        }
+        else
+        {
+            return res.status(400).send("IMAGE FAILURE")
+        }
+        
+    }
+    catch(e)
+    {
+        return res.status(400).send(e.message)
+    }
+})
+
 router.get('/v1/user',auth, async (req,res)=>
 {
     try
@@ -142,6 +181,28 @@ router.get('/v1/user',auth, async (req,res)=>
     catch(e)
     {
         return res.status(400).send(e.message)
+    }
+})
+
+router.get('/v1/user/image/:id',async (req,res)=>
+{
+    try
+    {
+        const id = req.params.id
+        const imgobj = await imagedownload(id)
+        if(imgobj)
+             {
+                    res.set('Content-Type', 'image/png')
+                    return res.send(imgobj[0].image)    
+            }
+        else
+             {
+                   return res.status(400).send("Image not found!")
+            }
+    }
+    catch(e)
+    {
+        res.status(400).send(e.message)
     }
 })
 

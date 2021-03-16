@@ -5,6 +5,8 @@ const helmet = require('helmet')
 const compression = require('compression')
 
 const UserRouter = require("./src/routers/user")
+const CategoryRouter = require("./src/routers/category")
+
 
 
 
@@ -18,6 +20,7 @@ app.use(express.json({limit: '50mb'}));
 
 
 app.use(UserRouter)
+app.use(CategoryRouter)
 
 
 app.use(helmet())
