@@ -21,7 +21,6 @@ const CategorySchema = new mongoose.Schema({
     {
        type: String,
        required: true,
-       unique: true 
     },
     active:
     {
@@ -31,13 +30,12 @@ const CategorySchema = new mongoose.Schema({
     
 })
 
-// CategorySchema.methods.toJSON = function () {
-//     const user = this
-//     const userobject = user.toObject()
-//     delete userobject.password
-//     delete userobject.tokens
-//     return userobject
-// }
+CategorySchema.methods.toJSON = function () {
+    const user = this
+    const userobject = user.toObject()
+    userobject.image = "https://stark-island-35960.herokuapp.com" + "/v1/category/image/" + user.image
+    return userobject
+}
 
 CategorySchema.pre('remove', async function (next) {
     const user = this

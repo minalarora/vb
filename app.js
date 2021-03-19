@@ -17,14 +17,15 @@ const port= process.env.PORT || 3000
 
 
 app.use(express.json({limit: '50mb'}));
+app.use(helmet())
+app.use(compression())
 
 
 app.use(UserRouter)
 app.use(CategoryRouter)
 
 
-app.use(helmet())
-app.use(compression())
+
 
 
 app.listen(port,()=>{
@@ -32,3 +33,5 @@ app.listen(port,()=>{
     console.log("server is up on port",port)
 
 })
+
+//https://stark-island-35960.herokuapp.com/
