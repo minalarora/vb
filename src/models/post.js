@@ -168,7 +168,7 @@ const PostSchema  = mongoose.Schema({
                 max(1000000).
                 required(),    
 
-                images : Joi.array().items(Joi.string()).required()
+                images : Joi.array().items(Joi.binary()).required()
          
             }   
     

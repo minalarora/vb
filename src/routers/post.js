@@ -2,7 +2,7 @@ const express = require('express')
 const router  = new express.Router()
 const auth = require("../auth/auth")
 const {Post,validatePost} = require("../models/post");
-const {imageuploadwithid, imagedownload}  = require('../utils/imageupload')
+const {imageupload, imagedownload}  = require('../utils/imageupload')
 var multer = require('multer')
 
 var upload = multer({
@@ -20,7 +20,7 @@ var upload = multer({
 
 
 
-router.post('/v1/post',auth,async (req,res)=>
+router.post('/v1/post',auth,upload.fields([{ name: 'images', maxCount: 4 }]),async (req,res)=>
 {
     try
     {
@@ -30,7 +30,18 @@ router.post('/v1/post',auth,async (req,res)=>
 
         if (error) return res.status(400).send(error.details[0].message);
 
-        let post  = new Post({...req.body,user: req.user.id})
+        let keys  = Object.keys(req.files)
+        let images  = []
+        for(i in keys)
+        {
+            for(j=0; j< req.files[keys[i]].length;j++)
+            {
+                let image  = await imageupload(req.files[keys[i]][j].buffer)
+                images.push(image.toString())
+            }
+        }
+
+        let post  = new Post({...req.body,user: req.user.id,images})
         await post.save()
         return res.status(200).send("POST CREATED SUCCESSFULLY")
         
