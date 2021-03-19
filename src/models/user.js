@@ -110,6 +110,7 @@ UserSchema.methods.toJSON = function () {
     const userobject = user.toObject()
     delete userobject.password
     delete userobject.tokens
+    userobject.image  = "https://stark-island-35960.herokuapp.com" + "/v1/user/image/" + user.image
     return userobject
 }
 
@@ -208,8 +209,7 @@ function validateUserByGmail(user) {
             min(3).
             max(255),
 
-            profile: Joi.string().
-            max(255),
+            
             
         }
 
