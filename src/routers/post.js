@@ -24,6 +24,7 @@ router.post('/v1/post',auth,upload.fields([{ name: 'images', maxCount: 4 }]),asy
 {
     try
     {
+        
         const {
             error
         } = validatePost(req.body);
@@ -106,7 +107,7 @@ router.get('/v1/post/category/:id',auth, async (req,res)=>{
     try
     {
         let id = req.params.id
-        let posts = await Post.find({active: true, sold: false, category: id }, null, { limit: 1000, sort: { createdAt: -1 } }).exec()
+        let posts = await Post.find({active: true, sold: false, category: id,  user:{ "$ne": req.user.id }}, null, { limit: 1000, sort: { createdAt: -1 } }).exec()
         return res.status(200).send(posts)
 
     }
@@ -167,6 +168,28 @@ router.get('/v1/post/view/:id',auth,async (req,res)=>
     catch(e)
     {
         return res.status(200)
+    }
+})
+
+router.get('/v1/post/image/:id',async (req,res)=>
+{
+    try
+    {
+        const id = req.params.id
+        const imgobj = await imagedownload(id)
+        if(imgobj)
+             {
+                    res.set('Content-Type', 'image/png')
+                    return res.send(imgobj[0].image)    
+            }
+        else
+             {
+                   return res.status(400).send("Image not found!")
+            }
+    }
+    catch(e)
+    {
+        res.status(400).send(e.message)
     }
 })
 

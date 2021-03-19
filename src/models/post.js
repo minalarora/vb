@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { customAlphabet }  =  require('nanoid')
-const nanoid = customAlphabet('1234567890', 5)
+const nanoid = customAlphabet('1234567890', 9)
 let moment = require('moment-timezone')
 let Float = require('mongoose-float').loadType(mongoose);
 const Joi = require("joi");
@@ -64,7 +64,7 @@ const PostSchema  = mongoose.Schema({
     {
         type: String,
         required: true,
-        default:  () => { return moment(new Date(invoice.createdAt)).tz("Asia/Kolkata").format("YYYY-MM-DD").toString()}
+        default:  () => { return moment(new Date()).tz("Asia/Kolkata").format("YYYY-MM-DD").toString()}
     },
     active:
     {
@@ -168,7 +168,7 @@ const PostSchema  = mongoose.Schema({
                 max(1000000).
                 required(),    
 
-                images : Joi.array().items(Joi.binary()).required()
+               
          
             }   
     
