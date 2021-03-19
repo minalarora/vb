@@ -141,11 +141,11 @@ router.post('/v1/user/image',auth,upload.single("image"),async (req,res)=>
         {
             req.user.image  = image
             await req.user.save()
-            return res.status(200).send("URL")
+            return res.status(200).send("Profile Uploaded")
         }
         else
         {
-            return res.status(400).send("IMAGE FAILURE")
+            return res.status(400).send("Unable to upload image!")
         }
         
     }

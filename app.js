@@ -6,6 +6,7 @@ const compression = require('compression')
 
 const UserRouter = require("./src/routers/user")
 const CategoryRouter = require("./src/routers/category")
+const PostRouter = require("./src/routers/post")
 
 
 
@@ -23,6 +24,7 @@ app.use(compression())
 
 app.use(UserRouter)
 app.use(CategoryRouter)
+app.use(PostRouter)
 
 
 

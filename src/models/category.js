@@ -47,6 +47,12 @@ CategorySchema.pre('remove', async function (next) {
 
 })
 
+CategorySchema.virtual('posts', {
+    ref: 'Post',
+    localField: 'id',
+    foreignField: 'category'
+})
+
 const Category = mongoose.model("Category", CategorySchema);
 
 module.exports.Category = Category;

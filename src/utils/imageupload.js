@@ -27,6 +27,28 @@ let imageupload  = async function (buffer) {
     
 }
 
+let imageuploadwithid  = async function (buffer,name) {
+    try
+    {
+        
+
+        let model = db.imagedb.model(name, 
+                new Schema({ image: Buffer}), name);
+
+        let com_buffer  = await sharp(buffer).resize(500).png().toBuffer()  
+
+        let obj = new model({image: com_buffer})
+        await obj.save()
+        return name
+    }
+    catch(e)
+    {
+
+        return 0        
+    }
+    
+}
+
 let imagedownload = async function (name) {
     try
     {
@@ -42,4 +64,4 @@ let imagedownload = async function (name) {
     }
 }
 
-module.exports = {imageupload, imagedownload}
+module.exports = {imageupload, imagedownload, imageuploadwithid}
