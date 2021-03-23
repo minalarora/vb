@@ -67,6 +67,8 @@ router.post('/v1/post',auth,upload.fields([{ name: 'images', maxCount: 4 },{name
     {
         return res.status(400).send(e.message)
     }
+}, (err, req, res, next) => {
+    return res.status(400).send("middleware error" + err)
 })
 
 
