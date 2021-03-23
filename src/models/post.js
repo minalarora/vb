@@ -49,6 +49,11 @@ const PostSchema  = mongoose.Schema({
         type: [String],
         required: true
     },
+    logo:
+    {
+        type: String,
+        default: null
+    },
     view:
     {
         type: Number,
@@ -120,6 +125,7 @@ const PostSchema  = mongoose.Schema({
         {
             userobject.images[i] = "https://stark-island-35960.herokuapp.com" + "/v1/post/image/" + user.images[i] 
         }
+        userobject.logo = "https://stark-island-35960.herokuapp.com" + "/v1/post/image/" + user.logo
         return userobject
     }
 

@@ -20,7 +20,7 @@ var upload = multer({
 
 
 
-router.post('/v1/post',auth,upload.fields([{ name: 'images', maxCount: 4 }]),async (req,res)=>
+router.post('/v1/post',auth,upload.fields([{ name: 'images', maxCount: 4 },{name: 'logo',maxCount:1}]),async (req,res)=>
 {
     try
     {
@@ -33,16 +33,32 @@ router.post('/v1/post',auth,upload.fields([{ name: 'images', maxCount: 4 }]),asy
 
         let keys  = Object.keys(req.files)
         let images  = []
+        let logo = null
         for(i in keys)
         {
             for(j=0; j< req.files[keys[i]].length;j++)
             {
-                let image  = await imageupload(req.files[keys[i]][j].buffer)
-                images.push(image.toString())
+                try
+                {
+                    let image  = await imageupload(req.files[keys[i]][j].buffer)
+                    if(keys[i] == "images")
+                    {
+                        images.push(image.toString())
+                    }
+                    else
+                    {
+                        logo  = image.toString()
+                    }
+                }
+                catch(e)
+                {
+
+                }
+              
             }
         }
 
-        let post  = new Post({...req.body,user: req.user.id,images})
+        let post  = new Post({...req.body,user: req.user.id,images,logo})
         await post.save()
         return res.status(200).send("POST CREATED SUCCESSFULLY")
         
@@ -158,6 +174,8 @@ router.get('/v1/post/view/:id',auth,async (req,res)=>
         {
             post.view = post.view + 1
             await post.save()
+            return res.status(200)
+            
         }
         else
         {
