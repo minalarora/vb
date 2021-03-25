@@ -184,27 +184,6 @@ router.get('/v1/user',auth, async (req,res)=>
     }
 })
 
-router.get('/v1/user/image/:id',async (req,res)=>
-{
-    try
-    {
-        const id = req.params.id
-        const imgobj = await imagedownload(id)
-        if(imgobj)
-             {
-                    res.set('Content-Type', 'image/png')
-                    return res.send(imgobj[0].image)    
-            }
-        else
-             {
-                   return res.status(400).send("Image not found!")
-            }
-    }
-    catch(e)
-    {
-        res.status(400).send(e.message)
-    }
-})
 
 router.patch('/v1/user',auth, async (req,res)=>{
     try

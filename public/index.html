@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Hello</title>
+   </head>
+   <script src = "/socket.io/socket.io.js"></script>
+   
+   <script>
+      const socket = io();
+      socket.emit('join',"chatid",(messages)=>{
+         //messages
+
+      })
+
+      socket.emit('sendmessage',{message,type,who,id},()=>{
+         //message sent callback fn
+      })
+
+      socket.on('receivemessage',(obj)=>{
+        // obj = message,type,who
+        
+      })
+
+      
+
+
+      // console.log("socket",socket)
+      // socket.emit('join',"room123")
+      // socket.on('countUpdated',(obj,callback)=>{
+      //    alert(obj.message)
+      //    // socket.join('123')
+      //    // socket.broadcast.to('123').emit('done','sdd')
+      //    // callback()
+      //    // socket.emit('received',{message:"received!",room:"123"})
+
+      // })
+      // socket.on('done',(msg)=>{
+      //    alert(msg)
+         
+      // })
+   </script>
+   <body>Hello</body>
+</html>
