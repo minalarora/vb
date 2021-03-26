@@ -63,6 +63,11 @@ const UserSchema = new mongoose.Schema({
         required: true,
         enum : ['EMAIL','GMAIL'],
     },
+    bookmark:
+    {
+        type: [Number],
+        default: []
+    },
     tokens: [
         {
             token: {

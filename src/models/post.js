@@ -129,6 +129,25 @@ const PostSchema  = mongoose.Schema({
         return userobject
     }
 
+    PostSchema.methods.withBookmark = function (bookmark) {
+        const user = this
+        const userobject = user.toObject()
+        for(i in user.images)
+        {
+            userobject.images[i] = "https://stark-island-35960.herokuapp.com" + "/v1/post/image/" + user.images[i] 
+        }
+        userobject.logo = "https://stark-island-35960.herokuapp.com" + "/v1/post/image/" + user.logo
+        if(bookmark.includes(user.id))
+        {
+            userobject.bookmark = true
+        }
+        else
+        {
+            userobject.bookmark = false
+        }
+        return userobject
+    }
+
     const Post = mongoose.model("Post", PostSchema);
 
     function validatePost(post) {
@@ -173,8 +192,6 @@ const PostSchema  = mongoose.Schema({
                 min(0).
                 max(1000000).
                 required(),    
-
-               
          
             }   
     

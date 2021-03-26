@@ -22,7 +22,7 @@ var upload = multer({
     }
 })
 
-router.post('/v1/chat/:id',auth,async (req,res)=>{
+router.post('/v1/chat/create/:id',auth,async (req,res)=>{
     try
     {
         let seconduser = await User.findOne({
@@ -62,8 +62,10 @@ router.post('/v1/chat/message',auth,async (req,res)=>{
     try
     {
         let oldchat = await Chat.findOne({id: req.body.id})
+        console.log(oldchat);
         if(oldchat && req.body.message)
         {
+            console.log("yes");
             let newchat = await oldchat.addMessage(req.body.message,'TEXT',req.user.id)
             return res.status(200).send(newchat)
         }
@@ -74,6 +76,7 @@ router.post('/v1/chat/message',auth,async (req,res)=>{
     }
     catch(e)
     {
+        console.log(e);
         return res.status(400).send(e.message)
     }
 })
