@@ -19,8 +19,11 @@ var upload = multer({
 
 io.on('connection', (socket)=>{
 
+
+    console.log('a new connection')
     let roomid = null
     socket.on('join',async (room,callback)=>{
+        console.log('joined' + room)
         socket.join(room)
         let chat = await Chat.findOne({id: room})
         roomid = chat.id   
@@ -33,8 +36,8 @@ io.on('connection', (socket)=>{
         callback()
     })
 
-    socket.on('disconnect',()=>{
-      socket.leave(roomid)   
+    socket.on('disconnect',(roomid)=>{
+      socket.leave()   
     })
 
 
