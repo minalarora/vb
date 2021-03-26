@@ -11,6 +11,7 @@ const CategoryRouter = require("./src/routers/category")
 const PostRouter = require("./src/routers/post")
 const ChatRouter = require('./src/routers/chat')
 const BookmarkRouter = require('./src/routers/bookmark')
+const TicketRouter = require('./src/routers/ticket')
 
 
 const app=express()
@@ -36,6 +37,7 @@ app.use(CategoryRouter)
 app.use(PostRouter)
 app.use(ChatRouter)
 app.use(BookmarkRouter)
+app.use(TicketRouter)
 
 
 
