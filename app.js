@@ -47,8 +47,8 @@ server.listen(port,()=>{
 
 
 
-module.exports.io = io
-require('./src/utils/chatfunction')
+// module.exports.io = io
+// require('./src/utils/chatfunction')
 
 
 

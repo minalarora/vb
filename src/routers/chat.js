@@ -57,21 +57,55 @@ router.post('/v1/chat/:id',auth,async (req,res)=>{
     }
 })
 
+
+router.post('/v1/chat/message',auth,async (req,res)=>{
+    try
+    {
+        let oldchat = await Chat.findOne({id: req.body.id})
+        if(oldchat && req.body.message)
+        {
+            let newchat = await oldchat.addMessage(req.body.message,'TEXT',req.user.id)
+            return res.status(200).send(newchat)
+        }
+        else
+        {
+            return res.status(400).send("Unable to send message!")
+        }
+    }
+    catch(e)
+    {
+        return res.status(400).send(e.message)
+    }
+})
+
 router.post('/v1/chat/image',auth,upload.single("image"),async (req,res)=>
 {
     try
     {
-        let image = await imageupload(req.file.buffer)
-        if(image!=0)
+        // {
+            //id-> chatid, image 
+        // }
+        let oldchat = await Chat.findOne({id: req.body.id})
+        if(oldchat)
         {
-            req.user.image  = image
-            await req.user.save()
-            return res.status(200).send("https://stark-island-35960.herokuapp.com" + "/v1/chat/image/" + image)
+            let image = await imageupload(req.file.buffer)
+            if(image!=0)
+            {
+
+                let newchat = await oldchat.addMessage("https://stark-island-35960.herokuapp.com" + "/v1/chat/image/" + image,'IMAGE',req.user.id)
+                return res.status(200).send(newchat)
+    
+            }
+            else
+            {
+                return res.status(400).send("Unable to send image!")
+            }   
         }
         else
         {
-            return res.status(400).send("Unable to upload image!")
+            return res.status(400).send("Unable to send image!")
         }
+        
         
     }
     catch(e)
