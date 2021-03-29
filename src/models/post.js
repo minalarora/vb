@@ -63,7 +63,7 @@ const PostSchema  = mongoose.Schema({
     {
         type: String,
         required: true,
-        enum : ['PROMOTION','BUY'],
+        enum : ['PROMOTION','BUY','ALL'],
     },
     fanbase:
     {
