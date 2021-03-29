@@ -20,7 +20,7 @@ var upload = multer({
 
 
 
-router.post('/v1/post',auth,upload.fields([{ name: 'images', maxCount: 4 },{name: 'logo',maxCount:1}]),async (req,res)=>
+router.post('/v1/post',auth,upload.fields([{ name: 'images', maxCount: 10 },{name: 'logo',maxCount:1}]),async (req,res)=>
 {
     try
     {

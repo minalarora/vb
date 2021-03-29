@@ -13,7 +13,7 @@ let imageupload  = async function (buffer) {
         let model = db.imagedb.model(name, 
                 new Schema({ image: Buffer}), name);
 
-        let com_buffer  = await sharp(buffer).resize(200).png().toBuffer()  
+        let com_buffer  = await sharp(buffer).resize(500).png().toBuffer()  
 
         let obj = new model({image: com_buffer})
         await obj.save()

@@ -65,6 +65,10 @@ const PostSchema  = mongoose.Schema({
         required: true,
         enum : ['PROMOTION','BUY'],
     },
+    fanbase:
+    {
+        type: String
+    },
     date:
     {
         type: String,
@@ -164,12 +168,12 @@ const PostSchema  = mongoose.Schema({
                 description: Joi
                     .string()
                     .min(3)
-                    .max(300)
+                    .max(1300)
                     .required(),
                 
                 price: Joi.number().
                 min(0).
-                max(100000).
+                max(1000000).
                 required(),
 
 
@@ -177,10 +181,7 @@ const PostSchema  = mongoose.Schema({
                 min(0).
                 max(100000),
 
-                link: Joi.string()
-                 .min(5)
-                .max(250)
-                .uri(),
+                link: Joi.string(),
 
                 type: Joi
                     .string()
