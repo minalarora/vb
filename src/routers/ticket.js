@@ -4,7 +4,7 @@ const {Ticket} = require('../models/ticket')
 const auth = require('../auth/auth')
 
 
-router.post("/ticket",auth,async (req,res)=>{
+router.post("/v1/ticket",auth,async (req,res)=>{
     try
     {
         const ticket  = new Ticket({...req.body,user: req.user.id,username: req.user.name, email: req.user.email})

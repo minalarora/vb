@@ -62,10 +62,8 @@ router.post('/v1/chat/message',auth,async (req,res)=>{
     try
     {
         let oldchat = await Chat.findOne({id: req.body.id})
-        console.log(oldchat);
         if(oldchat && req.body.message)
         {
-            console.log("yes");
             let newchat = await oldchat.addMessage(req.body.message,'TEXT',req.user.id)
             return res.status(200).send(newchat)
         }
@@ -81,7 +79,7 @@ router.post('/v1/chat/message',auth,async (req,res)=>{
     }
 })
 
-router.post('/v1/chat/image',auth,upload.single("image"),async (req,res)=>
+router.post('/v1/chat/image',auth,upload.fields([{ name: 'images', maxCount: 4 }]),async (req,res)=>
 {
     try
     {
@@ -91,18 +89,48 @@ router.post('/v1/chat/image',auth,upload.single("image"),async (req,res)=>
         let oldchat = await Chat.findOne({id: req.body.id})
         if(oldchat)
         {
-            let image = await imageupload(req.file.buffer)
-            if(image!=0)
-            {
+            // let image = await imageupload(req.file.buffer)
+            // if(image!=0)
+            // {
 
-                let newchat = await oldchat.addMessage("https://stark-island-35960.herokuapp.com" + "/v1/chat/image/" + image,'IMAGE',req.user.id)
-                return res.status(200).send(newchat)
+            //     let newchat = await oldchat.addMessage("https://stark-island-35960.herokuapp.com" + "/v1/chat/image/" + image,'IMAGE',req.user.id)
+            //     return res.status(200).send(newchat)
     
-            }
-            else
+            // }
+            // else
+            // {
+            //     return res.status(400).send("Unable to send image!")
+            // }   
+            let keys  = Object.keys(req.files)
+            let images  = ""
+            for(i in keys)
             {
-                return res.status(400).send("Unable to send image!")
-            }   
+                for(j=0; j < req.files[keys[i]].length;j++)
+                {
+                    try
+                    {
+                        let image  = await imageupload(req.files[keys[i]][j].buffer)
+                        if(keys[i] == "images")
+                        {
+                            //images.push(image.toString())
+                            let url = "https://stark-island-35960.herokuapp.com" + "/v1/chat/image/" + image;
+                            images  = images + url +","
+                             
+                        }
+                        else
+                        {
+                         //   logo  = image.toString()
+                        }
+                    }
+                    catch(e)
+                    {
+    
+                    }
+                  
+                }
+            }
+                let newchat = await oldchat.addMessage(images,'IMAGE',req.user.id)
+                return res.status(200).send(newchat)   
         }
         else
         {
@@ -175,7 +203,7 @@ router.get('/v1/chat/single',auth,async (req,res)=>{
 router.get('/v1/chat/buy',auth,async (req,res)=>{
     try
     {
-        await Chat.find({firstuser: req.user.id}).sort({ createdAt: -1 }).exec(function (err, chats) {
+        await Chat.find({ $or : [ { firstuser: req.user.id }, { seconduser: req.user.id } ] }).sort({ createdAt: -1 }).exec(function (err, chats) {
             if (chats) {
                 res.status(200).send(chats.map((chat)=>{
                     return chat.list()
@@ -193,26 +221,26 @@ router.get('/v1/chat/buy',auth,async (req,res)=>{
     }
 })
 
-router.get('/v1/chat/sell',auth,async (req,res)=>{
-    try
-    {
-        await Chat.find({seconduser: req.user.id}).sort({ createdAt: -1 }).exec(function (err, chats) {
-            if (chats) {
-                res.status(200).send(chats.map((chat)=>{
-                    return chat.list()
-                }))
-            }
-            else {
-                res.status(200).send([])
-            }
-        })
+// router.get('/v1/chat/sell',auth,async (req,res)=>{
+//     try
+//     {
+//         await Chat.find({seconduser: req.user.id}).sort({ createdAt: -1 }).exec(function (err, chats) {
+//             if (chats) {
+//                 res.status(200).send(chats.map((chat)=>{
+//                     return chat.list()
+//                 }))
+//             }
+//             else {
+//                 res.status(200).send([])
+//             }
+//         })
         
-    }
-    catch(e)
-    {
-        return res.status(400).send(e.message)
-    }
-})
+//     }
+//     catch(e)
+//     {
+//         return res.status(400).send(e.message)
+//     }
+// })
 
 router.get('/v1/chat/:id',auth,async (req,res)=>{
     try

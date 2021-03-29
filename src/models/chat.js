@@ -57,7 +57,7 @@ const ChatSchema = new mongoose.Schema({
             {
             type: String,
             required: true,
-            default:  () => { return moment(new Date()).tz("Asia/Kolkata").format("YYYY-MM-DD").toString()}
+            default:  () => { return Date.now()}
             },
             who:
             {
