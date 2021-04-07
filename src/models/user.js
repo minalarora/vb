@@ -142,6 +142,12 @@ UserSchema.virtual('posts', {
     foreignField: 'user'
 })
 
+UserSchema.virtual('notification_list', {
+    ref: 'Notification',
+    localField: 'id',
+    foreignField: 'user'
+})
+
 const User = mongoose.model("User", UserSchema);
 
 

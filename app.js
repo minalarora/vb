@@ -12,11 +12,12 @@ const PostRouter = require("./src/routers/post")
 const ChatRouter = require('./src/routers/chat')
 const BookmarkRouter = require('./src/routers/bookmark')
 const TicketRouter = require('./src/routers/ticket')
+const NotificationRouter = require('./src/routers/notification')
 
 
 const app=express()
 const server = http.createServer(app)
-const io = socketio(server)
+// const io = socketio(server)
 
 
 const port= process.env.PORT || 3000
@@ -38,7 +39,7 @@ app.use(PostRouter)
 app.use(ChatRouter)
 app.use(BookmarkRouter)
 app.use(TicketRouter)
-
+app.use(NotificationRouter)
 
 
 
