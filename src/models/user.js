@@ -3,6 +3,7 @@ const { customAlphabet }  =  require('nanoid')
 const nanoid = customAlphabet('1234567890', 5)
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
+const {Chat} = require('./chat')
 
 
 const UserSchema = new mongoose.Schema({
@@ -131,7 +132,29 @@ UserSchema.pre('remove', async function (next) {
 
 UserSchema.pre('save', async function (next) {
     const user = this
-    //not doing anything for now
+    try
+    {
+        
+    let condition_one = {firstuser: user.id};
+    let condition_two = {seconduser: user.id};
+    let update_one = {
+        $set : {
+            firstuserimage: user.image
+      }
+    };
+    let update_two = {
+        $set : {
+            seconduserimage: user.image
+      }
+    };
+    let options = { multi: true, upsert: true };
+    await Chat.updateMany(condition_one,update_one,options,(err,res)=>{})
+    await Chat.updateMany(condition_two,update_two,options,(err,res)=>{})
+    }
+    catch(e)
+    {
+
+    }
     next()
 })
 

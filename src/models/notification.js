@@ -61,6 +61,12 @@ NotificationSchema.pre('save', async function (next) {
     }
 })
 
+
+NotificationSchema.statics.createNotification  = async function (user,body,header,type) {
+    let notification = new Notification({user,body,header,type})
+    await notification.save()
+    return;
+}
  
 
 

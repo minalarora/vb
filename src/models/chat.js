@@ -37,6 +37,17 @@ const ChatSchema = new mongoose.Schema({
         type: String,
         required:true,
     },
+    firstuserimage:
+    {
+        type: String,
+        default:"",
+    },
+    
+    seconduserimage:
+    {
+        type: String,
+        default:"",
+    },
     
     
 
@@ -86,6 +97,8 @@ ChatSchema.methods.addMessage = async function(message,type,who)
 ChatSchema.methods.list = function () {
     const user = this
     const userobject = user.toObject()
+    userobject.firstuserimage = "https://stark-island-35960.herokuapp.com" + "/v1/user/image/" + user.firstuserimage
+    userobject.seconduserimage = "https://stark-island-35960.herokuapp.com" + "/v1/user/image/" + user.seconduserimage
     userobject.messages = user.messages[user.messages.length - 1] 
     return userobject
 }
@@ -119,6 +132,8 @@ ChatSchema.pre('save', async function (next) {
 ChatSchema.methods.toJSON = function () {
     const user = this
     const userobject = user.toObject()
+    userobject.firstuserimage = "https://stark-island-35960.herokuapp.com" + "/v1/user/image/" + user.firstuserimage
+    userobject.seconduserimage = "https://stark-island-35960.herokuapp.com" + "/v1/user/image/" + user.seconduserimage
     return userobject
 }
 
