@@ -37,7 +37,7 @@ router.post('/v1/user/email',async (req,res)=>
             email: req.body.email,
         });
 
-        if (user) return res.status(400).send("User already registered.");
+        if (user) return res.status(400).send({message:"User already registered."});
 
         user  =  new User({...req.body,type:"EMAIL"})
         const token=await user.generateToken()
@@ -49,7 +49,7 @@ router.post('/v1/user/email',async (req,res)=>
     }
     catch(e)
     {
-       return res.status(400).send(e.message)
+       return res.status(400).send({message: e.message})
     }
 })
 
@@ -82,7 +82,7 @@ router.post('/v1/user/gmail',async (req,res)=>
     }
     catch(e)
     {
-       return res.status(400).send(e.message)
+       return res.status(400).send({message: e.message})
     }
 })
 
@@ -98,15 +98,15 @@ router.post('/v1/login',async (req,res)=>{
                 return res.status(200).send({token,user})
             }
             else {
-                return res.status(401).send("Invalid Credentials!")
+                return res.status(401).send({message:"Invalid Credentials!"})
             }
         }
-        return res.status(400).send("User not found!")
+        return res.status(400).send({message:"User not found!"})
 
     }
     catch(e)
     {
-        return res.status(400).send(e.message)   
+        return res.status(400).send({message: e.message})   
     }
 })
 
@@ -127,7 +127,7 @@ router.post('/v1/logout',auth,async (req,res)=>
     }
     catch(e)
     {
-        return res.status(400).send(e.message)
+        return res.status(400).send({message: e.message})
     }
 })
 
@@ -151,7 +151,7 @@ router.post('/v1/user/image',auth,upload.single("image"),async (req,res)=>
     }
     catch(e)
     {
-        return res.status(400).send(e.message)
+        return res.status(400).send({message: e.message})
     }
 })
 
@@ -170,7 +170,7 @@ router.get('/v1/user',auth, async (req,res)=>
              }
             else
             {
-                return res.status(400).send("User not found!")
+                return res.status(400).send({message:"User not found!"})
             }    
         }
         else
@@ -180,7 +180,7 @@ router.get('/v1/user',auth, async (req,res)=>
     }
     catch(e)
     {
-        return res.status(400).send(e.message)
+        return res.status(400).send({message: e.message})
     }
 })
 
@@ -202,7 +202,7 @@ router.get('/v1/user/image/:id',async (req,res)=>
     }
     catch(e)
     {
-        res.status(400).send(e.message)
+        res.status(400).send({message: e.message})
     }
 })
 
@@ -218,7 +218,7 @@ router.patch('/v1/user',auth, async (req,res)=>{
         })
 
         if (!isValidOperation && (updates.length > 0)) {
-            return res.status(400).send("Invalid Request!")
+            return res.status(400).send({message:"Invalid Request!"})
         }
 
         updates.forEach((update) => 
@@ -234,7 +234,7 @@ router.patch('/v1/user',auth, async (req,res)=>{
     }
     catch(e)
     {
-        return res.status(400).send(e.message)
+        return res.status(400).send({message: e.message})
     }
 })
 
@@ -248,7 +248,7 @@ router.delete("/v1/user",auth,async (req,res)=>
     }
     catch(e)
     {
-        res.status(400).send(e.message)
+        res.status(400).send({message: e.message})
     }
 })
 

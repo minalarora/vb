@@ -9,12 +9,12 @@ router.post("/v1/rating",auth,async (req,res)=>{
        
         const rating  = new Rating({...req.body,userid: req.user.id,username: req.user.name})
         await rating.save()
-        return res.status(200).send("Thanks for the feedback!")     
+        return res.status(200).send({message:"Thanks for the feedback!"})     
     }
     catch(e)
     {
         
-        res.status(400).send(e.message)
+        res.status(400).send({message: e.message})
     }
 })
 

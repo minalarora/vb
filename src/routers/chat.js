@@ -53,7 +53,7 @@ router.post('/v1/chat/create/:id',auth,async (req,res)=>{
     }
     catch(e)
     {
-        return res.status(400).send(e.message)
+        return res.status(400).send({message: e.message})
     }
 })
 
@@ -75,7 +75,7 @@ router.post('/v1/chat/message',auth,async (req,res)=>{
     catch(e)
     {
         console.log(e);
-        return res.status(400).send(e.message)
+        return res.status(400).send({message: e.message})
     }
 })
 
@@ -141,7 +141,7 @@ router.post('/v1/chat/image',auth,upload.fields([{ name: 'images', maxCount: 4 }
     }
     catch(e)
     {
-        return res.status(400).send(e.message)
+        return res.status(400).send({message: e.message})
     }
 })
 
@@ -163,7 +163,7 @@ router.get('/v1/chat/image/:id',async (req,res)=>
     }
     catch(e)
     {
-        res.status(400).send(e.message)
+        res.status(400).send({message: e.message})
     }
 })
 
@@ -196,7 +196,7 @@ router.get('/v1/chat/single',auth,async (req,res)=>{
     }
     catch(e)
     {
-        return res.status(400).send(e.message)
+        return res.status(400).send({message: e.message})
     }
 })
 
@@ -217,7 +217,7 @@ router.get('/v1/chat/buy',auth,async (req,res)=>{
     }
     catch(e)
     {
-        return res.status(400).send(e.message)
+        return res.status(400).send({message: e.message})
     }
 })
 
@@ -238,7 +238,7 @@ router.get('/v1/chat/buy',auth,async (req,res)=>{
 //     }
 //     catch(e)
 //     {
-//         return res.status(400).send(e.message)
+//         return res.status(400).send({message: e.message})
 //     }
 // })
 

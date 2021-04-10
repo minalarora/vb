@@ -37,7 +37,7 @@ router.post('/v1/category',upload.single("image"),async (req,res)=>
     }
     catch(e)
     {
-        return res.status(400).send(e.message)
+        return res.status(400).send({message: e.message})
     }
 })
 
@@ -57,7 +57,7 @@ router.get('/v1/category',auth, async (req,res)=>
     }
     catch(e)
     {
-        return res.status(400).send(e.message)
+        return res.status(400).send({message: e.message})
     }
 })
 
@@ -80,7 +80,7 @@ router.get('/v1/category/image/:id',async (req,res)=>
     }
     catch(e)
     {
-        res.status(400).send(e.message)
+        res.status(400).send({message: e.message})
     }
 })
 
@@ -113,7 +113,7 @@ router.patch('/v1/category/:id',async (req,res)=>
     }
     catch(e)
     {
-        return res.status(400).send(e.message)
+        return res.status(400).send({message: e.message})
     }
 })
 
@@ -136,7 +136,7 @@ router.delete('/v1/category/:id',async (req,res)=>
     }
     catch(e)
     {
-        res.status(400).send(e.message)
+        res.status(400).send({message: e.message})
     }
 })
 

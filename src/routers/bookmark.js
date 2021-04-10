@@ -19,20 +19,20 @@ router.post('/v1/bookmark/:id',auth,async (req,res)=>{
                 return bookmark != id
             })
             await req.user.save()
-            return res.status(200).send('Post removed from favourites!')
+            return res.status(200).send({message:'Post removed from favourites!'})
         }
         else
         {
             req.user.bookmark = req.user.bookmark.concat(id)
             await req.user.save()
-            return res.status(200).send('Post added in favourites!')
+            return res.status(200).send({message:'Post added in favourites!'})
 
         }
 
     }
     catch(e)
     {
-        return res.status(400).send(e.message)
+        return res.status(400).send({message: e.message})
     }
 })
 
@@ -56,7 +56,7 @@ router.get('/v1/bookmark',auth,async (req,res)=>{
     }
     catch(e)
     {
-        return res.status(400).send(e.message)
+        return res.status(400).send({message: e.message})
     }
 })
 
