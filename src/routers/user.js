@@ -123,7 +123,7 @@ router.post('/v1/logout',auth,async (req,res)=>
             return notification != req.body.notification
         })
         await req.user.save()
-        return res.status(200).send()
+        return res.status(200).send({message: "Logout Successfully!"})
     }
     catch(e)
     {
