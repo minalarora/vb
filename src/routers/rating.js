@@ -14,7 +14,7 @@ router.post("/v1/rating",auth,async (req,res)=>{
     catch(e)
     {
         
-        res.status(400).send({message: e.message})
+        res.status(400).send(e.message)
     }
 })
 

@@ -67,7 +67,7 @@ router.post('/v1/post',auth,upload.fields([{ name: 'images', maxCount: 10 },{nam
     catch(e)
     {
         
-        return res.status(400).send({message: e.message})
+        return res.status(400).send(e.message)
     }
 }, (err, req, res, next) => {
     
@@ -93,7 +93,7 @@ router.post('/v1/post/image',auth,upload.single("image"),async (req,res)=>
     }
     catch(e)
     {
-        return res.status(400).send({message: e.message})
+        return res.status(400).send(e.message)
     }
 })
 
@@ -120,7 +120,7 @@ router.get('/v1/post/me',auth, async (req,res)=>
     }
     catch(e)
     {
-        return res.status(400).send({message: e.message})
+        return res.status(400).send(e.message)
     }
 })
 
@@ -134,7 +134,7 @@ router.get('/v1/post/category/:id',auth, async (req,res)=>{
     }
     catch(e)
     {
-        return res.status(400).send({message: e.message})
+        return res.status(400).send(e.message)
     }
 })
 
@@ -149,7 +149,7 @@ router.get('/v1/post/all',auth,async (req,res)=>{
     } 
     catch(e)
     {
-        return res.status(400).send({message: e.message})
+        return res.status(400).send(e.message)
     }
 })
 
@@ -167,7 +167,7 @@ router.get('/v1/post/single/:id',auth,async (req,res)=>
         }
     }
     catch (e) {
-        res.status(400).send({message: e.message})
+        res.status(400).send(e.message)
     }
 })
 
@@ -214,7 +214,7 @@ router.get('/v1/post/image/:id',async (req,res)=>
     }
     catch(e)
     {
-        res.status(400).send({message: e.message})
+        res.status(400).send(e.message)
     }
 })
 
@@ -248,7 +248,7 @@ router.patch('/v1/post/:id',auth, async (req,res)=>{
     }
     catch(e)
     {
-        return res.status(400).send({message: e.message})
+        return res.status(400).send(e.message)
     }
 })
 
@@ -272,7 +272,7 @@ router.delete('/v1/post/:id',async (req,res)=>
     }
     catch(e)
     {
-        res.status(400).send({message: e.message})
+        res.status(400).send(e.message)
     }
 })
 

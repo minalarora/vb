@@ -32,7 +32,7 @@ router.post('/v1/bookmark/:id',auth,async (req,res)=>{
     }
     catch(e)
     {
-        return res.status(400).send({message: e.message})
+        return res.status(400).send(e.message)
     }
 })
 
@@ -56,7 +56,7 @@ router.get('/v1/bookmark',auth,async (req,res)=>{
     }
     catch(e)
     {
-        return res.status(400).send({message: e.message})
+        return res.status(400).send(e.message)
     }
 })
 
