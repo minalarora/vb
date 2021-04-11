@@ -124,6 +124,19 @@ router.get('/v1/post/me',auth, async (req,res)=>
     }
 })
 
+router.get('/v1/post/user/:id',auth, async (req,res)=>
+{
+    try
+    {
+        let posts = await Post.find({active: true, sold: false, user: req.params.id}, null, { limit: 1000, sort: { createdAt: -1 } }).exec()
+        return res.status(200).send(req.user.posts)
+    }
+    catch(e)
+    {
+        return res.status(400).send(e.message)
+    }
+})
+
 router.get('/v1/post/category/:id',auth, async (req,res)=>{
     try
     {
