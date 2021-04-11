@@ -41,7 +41,7 @@ router.post('/v1/chat/create/:id',auth,async (req,res)=>{
             {
                 return res.status(200).send(chat)
             }
-            chat = new Chat({firstuser: req.user.id, seconduser: req.params.id,firstusername: req.user.name, secondusername: seconduser.name,firstuserimage: req.user.image, seconduserimage: seconduser.image})
+            chat = new Chat({firstuser: req.user.id, seconduser: req.params.id,firstusername: req.user.name, secondusername: seconduser.name,firstuserimage: req.user.profile, seconduserimage: seconduser.profile})
             await chat.save()
             return res.status(200).send(chat)
             

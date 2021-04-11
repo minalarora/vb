@@ -116,7 +116,7 @@ UserSchema.methods.toJSON = function () {
     const userobject = user.toObject()
     delete userobject.password
     delete userobject.tokens
-    userobject.image  = "https://stark-island-35960.herokuapp.com" + "/v1/user/image/" + user.image
+    userobject.profile  = "https://stark-island-35960.herokuapp.com" + "/v1/user/image/" + user.profile
     return userobject
 }
 

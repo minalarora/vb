@@ -139,7 +139,7 @@ router.post('/v1/user/image',auth,upload.single("image"),async (req,res)=>
         let image = await imageupload(req.file.buffer)
         if(image!=0)
         {
-            req.user.image  = image
+            req.user.profile  = image
             await req.user.save()
             return res.status(200).send("Profile Uploaded")
         }
