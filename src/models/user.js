@@ -147,9 +147,13 @@ UserSchema.pre('save', async function (next) {
             seconduserimage: user.profile
       }
     };
-    let options = { multi: true, upsert: true };
-    await Chat.updateMany(condition_one,update_one,options,(err,res)=>{})
-    await Chat.updateMany(condition_two,update_two,options,(err,res)=>{})
+    let options = { multi: true, upsert: false };
+    await Chat.updateMany(condition_one,update_one,options,(err,res)=>{
+        console.log(res)
+    })
+    await Chat.updateMany(condition_two,update_two,options,(err,res)=>{
+        console.log(res)
+    })
     }
     catch(e)
     {
