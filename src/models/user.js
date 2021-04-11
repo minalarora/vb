@@ -139,12 +139,12 @@ UserSchema.pre('save', async function (next) {
     let condition_two = {seconduser: user.id};
     let update_one = {
         $set : {
-            firstuserimage: user.image
+            firstuserimage: user.profile
       }
     };
     let update_two = {
         $set : {
-            seconduserimage: user.image
+            seconduserimage: user.profile
       }
     };
     let options = { multi: true, upsert: true };
