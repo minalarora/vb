@@ -175,7 +175,14 @@ router.get('/v1/user',auth, async (req,res)=>
         }
         else
         {
-            return res.status(200).send(req.user)
+            if(req.user)
+            {
+               return res.status(200).send(req.user)   
+            }
+           else
+           {
+               return res.status(400).send({message:"User not found!"})
+           }
         }
     }
     catch(e)
