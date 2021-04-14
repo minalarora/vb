@@ -9,6 +9,7 @@
     "compression": "^1.7.4",
     "cron": "^1.8.2",
     "express": "^4.17.1",
+    "fuse.js": "^6.4.6",
     "helmet": "^4.4.1",
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",

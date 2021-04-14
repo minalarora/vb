@@ -17,6 +17,8 @@ var upload = multer({
     }
 })
 
+const Fuse = require('fuse.js')
+
 
 
 
@@ -183,6 +185,45 @@ router.get('/v1/post/single/:id',auth,async (req,res)=>
     }
     catch (e) {
         res.status(400).send(e.message)
+    }
+})
+
+router.get('/v1/post/search/:text',auth, async (req,res)=>{
+    try
+    {
+        const text = req.params.text
+        const len =  text.length
+        const options = {
+             isCaseSensitive: false,
+             includeScore: false,
+             shouldSort: true,
+             includeMatches: true,
+             findAllMatches: true,
+             minMatchCharLength: len,
+            //  threshold: 1.0,
+            //  distance: 1000,
+            // useExtendedSearch: false,
+             ignoreLocation: true,
+            // ignoreFieldNorm: false,
+            keys: [
+              "name",
+              "description",
+              "category"
+            ]
+          };
+          let posts = await Post.find({active: true, sold: false, user:{ "$ne": req.user.id } }, null, { limit: 1000, sort: { createdAt: -1 } }).exec()
+          const fuse = new Fuse(posts, options);
+
+          // Change the pattern
+          const pattern = text
+          return res.status(200).send(fuse.search(pattern).map((obj)=>{
+              return obj.item.withBookmark(req.user.bookmark)
+          }))
+
+    }
+    catch(e)
+    {
+        res.status(400).send(e.message) 
     }
 })
 
