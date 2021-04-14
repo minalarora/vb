@@ -129,7 +129,7 @@ router.get('/v1/post/user/:id',auth, async (req,res)=>
     try
     {
         let posts = await Post.find({active: true, sold: false, user: req.params.id}, null, { limit: 1000, sort: { createdAt: -1 } }).exec()
-        return res.status(200).send(req.user.posts)
+        return res.status(200).send(posts)
     }
     catch(e)
     {
@@ -142,7 +142,9 @@ router.get('/v1/post/category/:id',auth, async (req,res)=>{
     {
         let id = req.params.id
         let posts = await Post.find({active: true, sold: false, category: id,  user:{ "$ne": req.user.id }}, null, { limit: 1000, sort: { createdAt: -1 } }).exec()
-        return res.status(200).send(posts)
+        return res.status(200).send(posts.map((post)=>{
+            return post.withBookmark(req.user.bookmark)
+        }))
 
     }
     catch(e)
@@ -173,7 +175,7 @@ router.get('/v1/post/single/:id',auth,async (req,res)=>
         const id = req.params.id
         const post = await Post.findOne({ id })
         if (post) {
-            return res.status(200).send(post)
+            return res.status(200).send(post.withBookmark(req.user.bookmark))
         }
         else {
             return res.status(400).send("Unable to load post")
