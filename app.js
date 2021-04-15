@@ -3,6 +3,8 @@ require("./src/db/dbfile")
 const express=require("express")
 const http = require("http")
 const socketio = require('socket.io')
+const path = require('path')
+// const ejs = require('ejs')
 const helmet = require('helmet')
 const compression = require('compression')
 
@@ -24,8 +26,9 @@ const server = http.createServer(app)
 const port= process.env.PORT || 3000
 
 app.use(express.static(__dirname + '/public'));
-app.get('/', function(req, res,next) {
-    res.sendFile(__dirname + '/index.html');
+
+app.get('/tac', function(req, res,next) {
+    res.sendFile(__dirname + '/tac.html');
 });
 
 
