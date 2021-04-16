@@ -26,6 +26,12 @@ const CategorySchema = new mongoose.Schema({
     {
         type: Boolean,
         default: true
+    },
+    type:
+    {
+        type: String,
+        default: "ALL",
+        enum : ['BUY','PROMOTION','ALL'],
     }
     
 })

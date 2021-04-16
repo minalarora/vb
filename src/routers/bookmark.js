@@ -45,7 +45,9 @@ router.get('/v1/bookmark',auth,async (req,res)=>{
         {
             if(posts)
             {
-                return res.status(200).send(posts)
+                return res.status(200).send(posts.map((post)=>{
+                    return post.withBookmark(req.user.bookmark)
+                }))
             }
             else
             {
