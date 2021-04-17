@@ -79,7 +79,7 @@ router.post('/v1/chat/message',auth,async (req,res)=>{
     }
 })
 
-router.post('/v1/chat/image',auth,upload.fields([{ name: 'images', maxCount: 4 }]),async (req,res)=>
+router.post('/v1/chat/image',auth,upload.fields([{ name: 'images', maxCount: 10 }]),async (req,res)=>
 {
     try
     {
