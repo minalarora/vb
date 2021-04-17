@@ -67,7 +67,8 @@ const PostSchema  = mongoose.Schema({
     },
     fanbase:
     {
-        type: String
+        type: String,
+        default: "0"
     },
     date:
     {
@@ -193,6 +194,8 @@ const PostSchema  = mongoose.Schema({
                 min(0).
                 max(1000000).
                 required(),    
+
+                fanbase: Joi.string()
          
             }   
     
