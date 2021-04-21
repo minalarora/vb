@@ -25,7 +25,7 @@ const PostSchema  = mongoose.Schema({
     },
     price:
     {
-        type: Float,
+        type: String,
         required: true
     },
     currency:
@@ -36,8 +36,8 @@ const PostSchema  = mongoose.Schema({
     },
     earnings:
     {
-        type: Float,
-        default: 0
+        type: String,
+        default: "0"
     },
     link:
     {
@@ -172,15 +172,11 @@ const PostSchema  = mongoose.Schema({
                     .max(1300)
                     .required(),
                 
-                price: Joi.number().
-                min(0).
-                max(1000000).
+                price: Joi.string().
                 required(),
 
 
-                earnings: Joi.number().
-                min(0).
-                max(100000),
+                earnings: Joi.string(),
 
                 link: Joi.string(),
 
