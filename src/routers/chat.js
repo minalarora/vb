@@ -9,6 +9,7 @@ const {
 const {Chat} = require("../models/chat")
 const {imageupload, imagedownload}  = require('../utils/imageupload')
 var multer = require('multer')
+const {sendNotification2} = require('../utils/createnotification')
 
 var upload = multer({
     limits:
@@ -65,6 +66,17 @@ router.post('/v1/chat/message',auth,async (req,res)=>{
         if(oldchat && req.body.message)
         {
             let newchat = await oldchat.addMessage(req.body.message,'TEXT',req.user.id)
+            if(req.user.id == oldchat.firstuser)
+            {
+                    let other_user = await User.findOne({id: oldchat.seconduser})
+                    sendNotification2(req.user.name,req.body.message,"CHAT",req.user.id,other_user.notifications)
+
+            }
+            else
+            {
+                let other_user = await User.findOne({id: oldchat.seconduser})
+                sendNotification2(req.user.name,req.body.message,"CHAT",req.user.id,other_user.notifications)
+            }
             return res.status(200).send(newchat)
         }
         else
