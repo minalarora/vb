@@ -16,6 +16,7 @@ const BookmarkRouter = require('./src/routers/bookmark')
 const TicketRouter = require('./src/routers/ticket')
 const NotificationRouter = require('./src/routers/notification')
 const RatingRouter = require('./src/routers/rating')
+const PostRatingRouter = require('./src/routers/postrating')
 
 
 const app=express()
@@ -45,6 +46,7 @@ app.use(BookmarkRouter)
 app.use(TicketRouter)
 app.use(NotificationRouter)
 app.use(RatingRouter)
+app.use(PostRatingRouter)
 
 
 
