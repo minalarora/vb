@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-const float = require('mongoose-float')
+let Float = require('mongoose-float').loadType(mongoose);
+let moment = require('moment-timezone')
 const { customAlphabet }  =  require('nanoid')
 const nanoid = customAlphabet('1234567890abcdef', 7)
 const {User} = require('../models/user')
@@ -25,14 +26,20 @@ const PostRatingSchema  = mongoose.Schema({
     },
     rating:
     {
-        type: float,
+        type: Float,
         required: true
     },
     message:
     {
         type: String,
         default:null
-    }
+    },
+    date:
+    {
+        type: String,
+        required: true,
+        default:  () => { return moment(new Date()).tz("Asia/Kolkata").format("YYYY-MM-DD").toString()}
+    },
 },{
     timestamps: true
 })
