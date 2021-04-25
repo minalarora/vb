@@ -49,4 +49,56 @@ router.get('/v1/postrating/:postid',auth,async (req,res)=>{
     }
 })
 
+router.patch('/v1/postrating/:id',auth,async (req,res)=>{
+    try
+    {
+        const updates = Object.keys(req.body)
+        const allowedUpdates = ['rating', 'message']
+
+        const isValidOperation = updates.every((update) => {
+            return allowedUpdates.includes(update)
+        })
+
+        if (!isValidOperation && (updates.length > 0)) {
+            return res.status(400).send("Invalid Request!")
+        }
+
+        const post = await PostRating.findOne({id})
+        updates.forEach((update) => 
+            {
+                post[update] = req.body[update] 
+            })
+
+        await post.save()
+        
+        
+        return res.status(200).send(post)
+
+    }
+    catch(e)
+    {
+        res.status(400).send(e.message) 
+    }
+})
+
+
+router.delete('/v1/postrating/:id',auth,async (req,res)=>{
+    try
+    {
+        const id = req.params.id
+        const post = await PostRating.findOneAndDelete({id})
+        if(post)
+        {
+             return res.status(200).send(post)   
+        }
+        else
+        {
+            return res.status(400).send("Unable to delete post!")
+        }
+    }
+    catch(e)
+    {
+        res.status(400).send(e.message) 
+    }
+})
 module.exports = router

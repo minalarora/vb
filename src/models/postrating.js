@@ -1,12 +1,18 @@
 const mongoose = require('mongoose')
 const float = require('mongoose-float')
 const { customAlphabet }  =  require('nanoid')
-const nanoid = customAlphabet('1234567890', 7)
+const nanoid = customAlphabet('1234567890abcdef', 7)
 const {User} = require('../models/user')
 
 
 const PostRatingSchema  = mongoose.Schema({
-    
+    id:
+    {
+        type: String,
+        default: () => {
+           return nanoid()
+        }
+    },
     userid:
     {
         type: Number,
