@@ -34,11 +34,11 @@ const PostRatingSchema  = mongoose.Schema({
         type: String,
         default:null
     },
-    date:
+    timestamp:
     {
-        type: String,
+        type: Number,
         required: true,
-        default:  () => { return moment(new Date()).tz("Asia/Kolkata").format("YYYY-MM-DD").toString()}
+        default:  () => { return Date.now()}
     },
 },{
     timestamps: true
