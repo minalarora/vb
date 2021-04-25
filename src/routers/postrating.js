@@ -52,6 +52,7 @@ router.get('/v1/postrating/:postid',auth,async (req,res)=>{
 router.patch('/v1/postrating/:id',auth,async (req,res)=>{
     try
     {
+        const id = req.params.id
         const updates = Object.keys(req.body)
         const allowedUpdates = ['rating', 'message']
 
