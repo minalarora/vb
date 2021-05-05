@@ -33,14 +33,18 @@ router.post('/v1/chat/create/:id',auth,async (req,res)=>{
         if(seconduser)
         {
             //returnOriginal: false 
-            let ne = true;
+        
             await Chat.findOneAndUpdate({firstuser: req.params.id,seconduser: req.user.id},
                 {$set: {seconduserseen : false}}, {new: false} , (err, chat) =>
                 {
                     if(chat)
                     {
-                        ne = false;
+                        
                         return res.status(200).send(chat)
+                    }
+                    else
+                    {
+                        
                     }
                 }
                 )
@@ -50,18 +54,17 @@ router.post('/v1/chat/create/:id',auth,async (req,res)=>{
                     {
                         if(chat)
                         {
-                            ne = false;
+                            
                             return res.status(200).send(chat)
                         }
                     }
                     )       
     
-            if(ne == true)
-            {
-            let chat = new Chat({firstuser: req.user.id, seconduser: req.params.id,firstusername: req.user.name, secondusername: seconduser.name,firstuserimage: req.user.profile, seconduserimage: seconduser.profile})
-            await chat.save()
-            return res.status(200).send(chat)
-            }
+            
+            // let chat = new Chat({firstuser: req.user.id, seconduser: req.params.id,firstusername: req.user.name, secondusername: seconduser.name,firstuserimage: req.user.profile, seconduserimage: seconduser.profile})
+            // await chat.save()
+            // return res.status(200).send(chat)
+            
             
         }
         else
