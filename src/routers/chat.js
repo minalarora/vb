@@ -34,7 +34,7 @@ router.post('/v1/chat/create/:id',auth,async (req,res)=>{
         {
             //returnOriginal: false 
             await Chat.findOneAndUpdate({firstuser: req.params.id,seconduser: req.user.id},
-                {$set: {seconduserseen : false}}, {new: true} , (err, chat) =>
+                {$set: {seconduserseen : false}}, null , (err, chat) =>
                 {
                     if(chat)
                     {
@@ -44,7 +44,7 @@ router.post('/v1/chat/create/:id',auth,async (req,res)=>{
                 )
 
                 await Chat.findOneAndUpdate({firstuser: req.user.id,seconduser: req.params.id},
-                    {$set: {firstuserseen : false}}, {new: true} , (err, chat) =>
+                    {$set: {firstuserseen : false}}, null , (err, chat) =>
                     {
                         if(chat)
                         {
