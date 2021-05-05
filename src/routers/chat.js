@@ -32,17 +32,28 @@ router.post('/v1/chat/create/:id',auth,async (req,res)=>{
 
         if(seconduser)
         {
-            let chat = await Chat.findOne({firstuser: req.params.id,seconduser: req.user.id})
-            if(chat)
-            {
-                return res.status(200).send(chat)
-            }
-            chat = await Chat.findOne({firstuser: req.user.id,seconduser: req.params.id})
-            if(chat)
-            {
-                return res.status(200).send(chat)
-            }
-            chat = new Chat({firstuser: req.user.id, seconduser: req.params.id,firstusername: req.user.name, secondusername: seconduser.name,firstuserimage: req.user.profile, seconduserimage: seconduser.profile})
+            //returnOriginal: false 
+            await Chat.findOneAndUpdate({firstuser: req.params.id,seconduser: req.user.id},
+                {$set: {seconduserseen : false}}, {new: true} , (err, chat) =>
+                {
+                    if(chat)
+                    {
+                        return res.status(200).send(chat)
+                    }
+                }
+                )
+
+                await Chat.findOneAndUpdate({firstuser: req.user.id,seconduser: req.params.id},
+                    {$set: {firstuserseen : false}}, {new: true} , (err, chat) =>
+                    {
+                        if(chat)
+                        {
+                            return res.status(200).send(chat)
+                        }
+                    }
+                    )       
+    
+            let chat = new Chat({firstuser: req.user.id, seconduser: req.params.id,firstusername: req.user.name, secondusername: seconduser.name,firstuserimage: req.user.profile, seconduserimage: seconduser.profile})
             await chat.save()
             return res.status(200).send(chat)
             

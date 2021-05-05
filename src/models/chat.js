@@ -48,9 +48,18 @@ const ChatSchema = new mongoose.Schema({
         type: String,
         default:"",
     },
-    
-    
 
+    firstuserseen:
+    {
+        type: Boolean,
+        default: false,
+    },
+
+    seconduserseen:
+    {
+        type: Boolean,
+        default: false,
+    },
     messages:[
         {
             message:
@@ -74,7 +83,7 @@ const ChatSchema = new mongoose.Schema({
             {
             type: Number,
             required: true    
-            }
+            },
 
         }
     ],
@@ -89,6 +98,14 @@ ChatSchema.methods.addMessage = async function(message,type,who)
 {
     const chat = this
     chat.messages = chat.messages.concat({message,type,who})
+    if(who == chat.firstuser)
+    {
+        chat.seconduserseen = true;
+    }
+    else
+    {
+        chat.firstuserseen = true;
+    }
     await chat.save()
     return chat
 
