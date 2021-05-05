@@ -32,40 +32,24 @@ router.post('/v1/chat/create/:id',auth,async (req,res)=>{
 
         if(seconduser)
         {
-            //returnOriginal: false 
-        
-            await Chat.findOneAndUpdate({firstuser: req.params.id,seconduser: req.user.id},
-                {$set: {seconduserseen : false}}, {new: false} , (err, chat) =>
-                {
-                    if(chat)
-                    {
-                        
-                        return res.status(200).send(chat)
-                    }
-                    else
-                    {
-                        
-                    }
-                }
-                )
-
-                await Chat.findOneAndUpdate({firstuser: req.user.id,seconduser: req.params.id},
-                    {$set: {firstuserseen : false}}, {new: false} , (err, chat) =>
-                    {
-                        if(chat)
-                        {
-                            
-                            return res.status(200).send(chat)
-                        }
-                    }
-                    )       
-    
-            
-            // let chat = new Chat({firstuser: req.user.id, seconduser: req.params.id,firstusername: req.user.name, secondusername: seconduser.name,firstuserimage: req.user.profile, seconduserimage: seconduser.profile})
-            // await chat.save()
-            // return res.status(200).send(chat)
-            
-            
+            let chat = await Chat.findOne({firstuser: req.params.id,seconduser: req.user.id})
+            if(chat)
+            {
+                chat.firstuserseen = true;
+                await chat.save()
+                return res.status(200).send(chat)
+            }
+            chat = await Chat.findOne({firstuser: req.user.id,seconduser: req.params.id})
+            if(chat)
+            {
+                chat.seconduserseen = true;
+                await chat.save()
+                return res.status(200).send(chat)
+            }
+            chat = new Chat({firstuser: req.user.id, seconduser: req.params.id,firstusername: req.user.name, secondusername: seconduser.name,firstuserimage: req.user.profile, seconduserimage: seconduser.profile})
+            await chat.save()
+            return res.status(200).send(chat)
+             
         }
         else
         {
