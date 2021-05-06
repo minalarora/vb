@@ -31,7 +31,7 @@ const CategorySchema = new mongoose.Schema({
     {
         type: String,
         default: "ALL",
-        enum : ['BUY','PROMOTION','ALL'],
+        enum : ['SELL','PROMOTION','ALL'],
     }
     
 })
