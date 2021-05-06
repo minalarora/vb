@@ -177,6 +177,8 @@ router.get('/v1/post/single/:id',auth,async (req,res)=>
         const id = req.params.id
         const post = await Post.findOne({ id })
         if (post) {
+            post.view = post.view + 1;
+            await post.save();
             return res.status(200).send(post.withBookmark(req.user.bookmark))
         }
         else {

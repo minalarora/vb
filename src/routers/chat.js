@@ -35,14 +35,14 @@ router.post('/v1/chat/create/:id',auth,async (req,res)=>{
             let chat = await Chat.findOne({firstuser: req.params.id,seconduser: req.user.id})
             if(chat)
             {
-                chat.firstuserseen = true;
+                chat.firstuserseen = false;
                 await chat.save()
                 return res.status(200).send(chat)
             }
             chat = await Chat.findOne({firstuser: req.user.id,seconduser: req.params.id})
             if(chat)
             {
-                chat.seconduserseen = true;
+                chat.seconduserseen = false;
                 await chat.save()
                 return res.status(200).send(chat)
             }
