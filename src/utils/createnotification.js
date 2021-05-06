@@ -16,6 +16,7 @@ const sendNotification = function(header,body,type,array) {
     obj.app_id = app_id
     obj.include_player_ids = array
     obj.data = {type,userid:0}
+    obj.collapse_id = "Others"
     obj.contents = {en: body}
     obj.headings = {en: header}
 
@@ -55,6 +56,7 @@ const sendNotification2 = function(header,body,type,userid,array) {
   obj.app_id = app_id
   obj.include_player_ids = array
   obj.data = {type,userid}
+  obj.collapse_id = "Messages"
   obj.contents = {en: body}
   obj.headings = {en: header}
 
