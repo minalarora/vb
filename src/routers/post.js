@@ -276,7 +276,7 @@ router.get('/v1/post/image/:id',async (req,res)=>
     }
 })
 
-router.patch('/v1/post/:id',auth, upload.fields([{ name: 'images', maxCount: 10 }]), async (req,res)=>{
+router.patch('/v1/post/:id',auth, upload.fields([{ name: 'images', maxCount: 10 },{name: 'logo',maxCount:1}]), async (req,res)=>{
     try
     {
         const id = req.params.id
@@ -363,6 +363,29 @@ router.delete('/v1/post/:id',async (req,res)=>
             return res.status(400).send("Unable to delete post!")
         }
          
+    }
+    catch(e)
+    {
+        res.status(400).send(e.message)
+    }
+})
+
+router.delete('/v1/post/image',async (req,res)=>{
+    try
+    {
+        let id = req.query.post
+        let image = req.query.image
+        const post = await Post.findOne({id})
+        // req.user.tokens = req.user.tokens.filter((token) => {
+        //     return token.token != req.token
+        // })
+        post.images  = post.images.filter((img)=>{
+            return img != image
+        })
+
+        await post.save()
+        return res.status(200).send("DONE!")
+
     }
     catch(e)
     {
