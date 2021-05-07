@@ -276,7 +276,7 @@ router.get('/v1/post/image/:id',async (req,res)=>
     }
 })
 
-router.patch('/v1/post/:id',auth, upload.fields([{ name: 'images', maxCount: 10 },{name: 'logo',maxCount:1}]), async (req,res)=>{
+router.post('/v1/post/update/:id',auth, upload.fields([{ name: 'images', maxCount: 10 },{name: 'logo',maxCount:1}]), async (req,res)=>{
     try
     {
         const id = req.params.id
