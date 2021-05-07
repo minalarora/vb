@@ -384,7 +384,7 @@ router.delete('/v1/post/image',async (req,res)=>{
         })
 
         await post.save()
-        return res.status(200).send("DONE!")
+        return res.status(200).send({message:'Done!'})
 
     }
     catch(e)
