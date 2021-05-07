@@ -276,12 +276,12 @@ router.get('/v1/post/image/:id',async (req,res)=>
     }
 })
 
-router.patch('/v1/post/:id',auth, async (req,res)=>{
+router.patch('/v1/post/:id',auth, upload.fields([{ name: 'images', maxCount: 10 }]), async (req,res)=>{
     try
     {
         const id = req.params.id
         const updates = Object.keys(req.body)
-        const allowedUpdates = ['name', 'description','price','currency','earnings','link','images','type','sold']
+        const allowedUpdates = ['name', 'description','price','currency','earnings','link','images','logo','type','sold','fanbase','category']
 
         const isValidOperation = updates.every((update) => {
             return allowedUpdates.includes(update)
@@ -296,6 +296,42 @@ router.patch('/v1/post/:id',auth, async (req,res)=>{
             {
                 post[update] = req.body[update] 
             })
+
+            let keys  = Object.keys(req.files)
+            let images  = []
+            let logo = null
+            for(i in keys)
+            {
+                for(j=0; j< req.files[keys[i]].length;j++)
+                {
+                    try
+                    {
+                        let image  = await imageupload(req.files[keys[i]][j].buffer)
+                        if(keys[i] == "images")
+                        {
+                            images.push(image.toString())
+                        }
+                        else
+                        {
+                            logo  = image.toString()
+                        }
+                    }
+                    catch(e)
+                    {
+    
+                    }
+                  
+                }
+            }
+        if(logo)
+        {
+            post.logo = logo
+        }
+        if(images.length > 0)
+        {
+            //array1.concat(array2)
+            post.images = post.images.concat(images)
+        }
 
         await post.save()
         
