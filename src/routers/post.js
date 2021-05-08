@@ -370,11 +370,13 @@ router.delete('/v1/post/:id',async (req,res)=>
     }
 })
 
-router.delete('/v1/post/image',async (req,res)=>{
+router.delete('/v1/postimage',auth,async (req,res)=>{
     try
     {
+        // console.log(req.query)
         let id = req.query.post
         let image = req.query.image
+        
         const post = await Post.findOne({id: parseInt(id)})
         // req.user.tokens = req.user.tokens.filter((token) => {
         //     return token.token != req.token
@@ -389,6 +391,7 @@ router.delete('/v1/post/image',async (req,res)=>{
     }
     catch(e)
     {
+        console.log(e)
         res.status(400).send(e.message)
     }
 })
