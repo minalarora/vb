@@ -375,7 +375,7 @@ router.delete('/v1/post/image',async (req,res)=>{
     {
         let id = req.query.post
         let image = req.query.image
-        const post = await Post.findOne({id})
+        const post = await Post.findOne({id: parseInt(id)})
         // req.user.tokens = req.user.tokens.filter((token) => {
         //     return token.token != req.token
         // })
