@@ -169,7 +169,7 @@ const PostSchema  = mongoose.Schema({
                 description: Joi
                     .string()
                     .min(3)
-                    .max(1300)
+                    .max(2300)
                     .required(),
                 
                 price: Joi.string().
