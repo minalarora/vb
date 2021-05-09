@@ -39,7 +39,7 @@ const CategorySchema = new mongoose.Schema({
 CategorySchema.methods.toJSON = function () {
     const user = this
     const userobject = user.toObject()
-    userobject.image = "https://stark-island-35960.herokuapp.com" + "/v1/category/image/" + user.image
+    userobject.image = "https://virtualbazaar.club" + "/v1/category/image/" + user.image
     return userobject
 }
 

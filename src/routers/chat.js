@@ -109,7 +109,7 @@ router.post('/v1/chat/image',auth,upload.fields([{ name: 'images', maxCount: 10 
             // if(image!=0)
             // {
 
-            //     let newchat = await oldchat.addMessage("https://stark-island-35960.herokuapp.com" + "/v1/chat/image/" + image,'IMAGE',req.user.id)
+            //     let newchat = await oldchat.addMessage("https://virtualbazaar.club" + "/v1/chat/image/" + image,'IMAGE',req.user.id)
             //     return res.status(200).send(newchat)
     
             // }
@@ -129,7 +129,7 @@ router.post('/v1/chat/image',auth,upload.fields([{ name: 'images', maxCount: 10 
                         if(keys[i] == "images")
                         {
                             //images.push(image.toString())
-                            let url = "https://stark-island-35960.herokuapp.com" + "/v1/chat/image/" + image;
+                            let url = "https://virtualbazaar.club" + "/v1/chat/image/" + image;
                             images  = images + url +","
                              
                         }

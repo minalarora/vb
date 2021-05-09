@@ -48,7 +48,7 @@ PostRatingSchema.methods.addUser = async function () {
     const rating = this
     const ratingobject = rating.toObject()
     const user = await User.findOne({id: rating.userid })
-    ratingobject.profile = "https://stark-island-35960.herokuapp.com" + "/v1/user/image/" + user.profile
+    ratingobject.profile = "https://virtualbazaar.club" + "/v1/user/image/" + user.profile
     ratingobject.username = user.name
     return ratingobject
 }
