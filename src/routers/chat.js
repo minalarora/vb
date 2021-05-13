@@ -129,7 +129,7 @@ router.post('/v1/chat/image',auth,upload.fields([{ name: 'images', maxCount: 10 
                         if(keys[i] == "images")
                         {
                             //images.push(image.toString())
-                            let url = "https://virtualbazaar.club" + "/v1/chat/image/" + image;
+                            let url = "https://images.virtualbazaar.club/" + image + ".png";
                             images  = images + url +","
                              
                         }
@@ -170,7 +170,7 @@ router.get('/v1/chat/image/:id',async (req,res)=>
         if(imgobj)
              {
                     res.set('Content-Type', 'image/png')
-                    return res.send(imgobj[0].image)    
+                    return res.send(imgobj)    
             }
         else
              {

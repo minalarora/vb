@@ -114,8 +114,8 @@ ChatSchema.methods.addMessage = async function(message,type,who)
 ChatSchema.methods.list = function () {
     const user = this
     const userobject = user.toObject()
-    userobject.firstuserimage = "https://virtualbazaar.club" + "/v1/user/image/" + user.firstuserimage
-    userobject.seconduserimage = "https://virtualbazaar.club" + "/v1/user/image/" + user.seconduserimage
+    userobject.firstuserimage = "https://images.virtualbazaar.club/" + user.firstuserimage + ".png"
+    userobject.seconduserimage = "https://images.virtualbazaar.club/" + user.seconduserimage + ".png"
     userobject.messages = user.messages[user.messages.length - 1] 
     return userobject
 }
@@ -149,8 +149,8 @@ ChatSchema.pre('save', async function (next) {
 ChatSchema.methods.toJSON = function () {
     const user = this
     const userobject = user.toObject()
-    userobject.firstuserimage = "https://virtualbazaar.club" + "/v1/user/image/" + user.firstuserimage
-    userobject.seconduserimage = "https://virtualbazaar.club" + "/v1/user/image/" + user.seconduserimage
+    userobject.firstuserimage = "https://images.virtualbazaar.club/" + user.firstuserimage + ".png"
+    userobject.seconduserimage = "https://images.virtualbazaar.club/" + user.seconduserimage + ".png"
     return userobject
 }
 

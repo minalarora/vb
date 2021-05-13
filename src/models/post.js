@@ -128,9 +128,9 @@ const PostSchema  = mongoose.Schema({
         const userobject = user.toObject()
         for(i in user.images)
         {
-            userobject.images[i] = "https://virtualbazaar.club" + "/v1/post/image/" + user.images[i] 
+            userobject.images[i] = "https://images.virtualbazaar.club/" + user.images[i] + ".png"
         }
-        userobject.logo = "https://virtualbazaar.club" + "/v1/post/image/" + user.logo
+        userobject.logo = "https://images.virtualbazaar.club/" + user.logo + ".png"
         return userobject
     }
 
@@ -139,9 +139,9 @@ const PostSchema  = mongoose.Schema({
         const userobject = user.toObject()
         for(i in user.images)
         {
-            userobject.images[i] = "https://virtualbazaar.club" + "/v1/post/image/" + user.images[i] 
+            userobject.images[i] = "https://images.virtualbazaar.club/" + user.images[i] + ".png"
         }
-        userobject.logo = "https://virtualbazaar.club" + "/v1/post/image/" + user.logo
+        userobject.logo = "https://images.virtualbazaar.club/" + user.logo + ".png"
         if(bookmark.includes(user.id))
         {
             userobject.bookmark = true

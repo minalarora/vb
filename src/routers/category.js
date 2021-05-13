@@ -71,7 +71,7 @@ router.get('/v1/category/image/:id',async (req,res)=>
         if(imgobj)
              {
                     res.set('Content-Type', 'image/png')
-                    return res.send(imgobj[0].image)    
+                    return res.send(imgobj)    
             }
         else
              {

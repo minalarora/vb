@@ -10,11 +10,13 @@ mongoose.connect(connectionUrl,{
 })
 
 
-mongoose.imagedb = mongoose.createConnection(connectionUrl2,{
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false
-})
+// mongoose.imagedb = mongoose.createConnection(connectionUrl2,{
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     useCreateIndex: true,
+//     useFindAndModify: false
+// })
 
-module.exports = mongoose
+
+
+//module.exports = mongoose
