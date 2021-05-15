@@ -131,7 +131,9 @@ router.get('/v1/post/user/:id',auth, async (req,res)=>
     try
     {
         let posts = await Post.find({active: true, sold: false, user: req.params.id}, null, { limit: 1000, sort: { createdAt: -1 } }).exec()
-        return res.status(200).send(posts)
+        return res.status(200).send(posts.map((post)=>{
+            return post.withBookmark(req.user.bookmark)
+        }))
     }
     catch(e)
     {
