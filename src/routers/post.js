@@ -297,8 +297,8 @@ router.post('/v1/post/update/:id',auth, upload.fields([{ name: 'images', maxCoun
                 post[update] = req.body[update] 
             })
 
-            if(req.files)
-            {
+     if(req.files)
+        {
                 let keys  = Object.keys(req.files)
             let images  = []
             let logo = null
@@ -325,17 +325,18 @@ router.post('/v1/post/update/:id',auth, upload.fields([{ name: 'images', maxCoun
                   
                 }
             }
+            if(logo)
+            {
+                post.logo = logo
             }
+            if(images.length > 0)
+            {
+                //array1.concat(array2)
+                post.images = post.images.concat(images)
+            }
+        }
             
-        if(logo)
-        {
-            post.logo = logo
-        }
-        if(images.length > 0)
-        {
-            //array1.concat(array2)
-            post.images = post.images.concat(images)
-        }
+        
 
         await post.save()
         
