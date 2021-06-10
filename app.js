@@ -32,6 +32,10 @@ app.get('/tac', function(req, res,next) {
     res.sendFile(__dirname + '/tac.html');
 });
 
+app.get('/virtualbazaar', function(req, res,next) {
+    res.sendFile(__dirname + '/vb.html');
+});
+
 
 app.use(express.json({limit: '50mb'}));
 app.use(helmet())
